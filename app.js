@@ -68,7 +68,13 @@
 
 
 /*_____________________________________________________________________________________
-
-
+Array programacion funcional 
 ---------------------------------------------------------------------------------------*/
 
+const frutas = ["🍎","🍑","🥝"];
+const nuevoArrayFrutas = frutas.map((fruta) => {
+    // console.log(fruta);
+    return fruta; //siempre hay que retornar algo con el map
+});
+
+console.log(nuevoArrayFrutas);
