@@ -11,7 +11,7 @@ console.log(btnProductos);
 const fragment = document.createDocumentFragment();
 
 //objeto carrito
-objetoCarrito = {};
+const objetoCarrito = [];
 
 
 
@@ -20,23 +20,25 @@ objetoCarrito = {};
 const agregarCarrito = (evento) =>{
     // console.log(evento);
     console.log(evento.target.dataset.fruta); //mostrando en contenido de cada boton
-    const objetoEvento = { //creando objeto para ir guardando en objeto carrito
+    const producto = { //creando objeto para ir guardando en el array objeto carrito
         nombre: evento.target.dataset.fruta,
         id: evento.target.id,
         cantidad: 1
     };
 
-    if (objetoCarrito.hasOwnProperty(objetoEvento.nombre)){
-        objetoEvento.cantidad = objetoCarrito[objetoEvento.nombre].cantidad + 1; //
+    const index = objetoCarrito.findIndex(item => item.id === producto.id);
+    console.log(index);
+
+    if (index !== -1){
+       objetoCarrito[index].cantidad++; // si el item en el array objetoCarrito ya se encuenta , la cantidad del item con el mismo index aumenta
+       console.log(objetoCarrito[index].cantidad);
+    }else{
+        objetoCarrito.push(producto);//caso contrario, no se encuentra producto en el carrito. Entonces se agrega
     };
 
-    objetoCarrito[objetoEvento.nombre] = objetoEvento;
+    console.log(objetoCarrito);
 
-    // console.log(objetoEvento);
-    // console.log(objetoCarrito);
-
-
-    pintarCarrito();
+    pintarCarrito(objetoCarrito);
 
 };
 
@@ -49,11 +51,12 @@ btnProductos.forEach(btn =>{
 
 //pintar carrito
 
-const pintarCarrito = () =>{
+const pintarCarrito = (arrayProductosAgregados) =>{
 
     carrito.textContent = null; //vacio para que no se repita todos los elementos agregados antes
 
-    Object.values(objetoCarrito).forEach(item => {  //con object.values paso los objetos a un array??
+    arrayProductosAgregados.forEach(item => { 
+        console.log(item);
 
         const clone = template.content.firstElementChild.cloneNode(true);
         clone.querySelector(".lead").textContent = item.nombre;
